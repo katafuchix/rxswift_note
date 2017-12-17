@@ -1,0 +1,16 @@
+@IBOutlet weak var textField: UITextField!
+@IBOutlet weak var label: UILabel!
+let disposeBag = DisposeBag()
+ 
+textField.rx.text.orEmpty.bind { [unowned self] text in
+            self.label.text = text
+} .disposed(by:disposeBag)
+ 
+ 
+textField.rx.text.asObservable().bind { [unowned self] text in
+            self.label.text = text
+} .disposed(by:disposeBag)
+ 
+textField.rx.text.asObservable().map { $0 }.bind { [unowned self] text in
+            self.label.text = text
+} .disposed(by:disposeBag)

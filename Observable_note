@@ -12,3 +12,12 @@ Observable.combineLatest(textField1.rx.text.orEmpty, textField2.rx.text.orEmpty)
             .disposed(by: rx.disposeBag)
             
 rx.textをasObservable()にしてsubscribeだとinputに関するイベントになってしまうので input以外で値を変更する場合に対応できないこともある
+Observable.combineLatestの方が楽
+
+        Observable.combineLatest(textField1.rx.text.orEmpty.asObservable(), textField2.rx.text.orEmpty.asObservable()).subscribe(onNext:
+            { [weak self] val1, val2 in
+                guard let _self = self else { return }
+                _self.label.text = "\(val1) \(val2)"
+            }
+            , onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: rx.disposeBag)
+            

@@ -1,0 +1,14 @@
+Observable.combineLatestを利用すると入力値がnullの際にも処理できる
+
+@IBOutlet weak var textField1: UITextField!
+@IBOutlet weak var textField2: UITextField!
+@IBOutlet weak var label: UILabel!
+
+Observable.combineLatest(textField1.rx.text.orEmpty, textField2.rx.text.orEmpty) { textValue1, textValue2  -> Int in
+            return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0)
+            }
+            .map { $0.description }
+            .bind(to: label.rx.text)
+            .disposed(by: rx.disposeBag)
+            
+rx.textをasObservable()にしてsubscribeだとinputに関するイベントになってしまうので input以外で値を変更する場合に対応できないこともある

@@ -21,3 +21,7 @@ Observable.combineLatestの方が楽
             }
             , onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: rx.disposeBag)
             
+
+doはイベント動作前に行う動作の定義になります。戻り値はObservableです。
+subscribeは監視の開始と同時に定義した動作を定義します。戻り値はDisposableです。
+それぞれ別のタイミングと意図を持つものなので、場合によって使い分けます。
